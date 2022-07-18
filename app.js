@@ -1,20 +1,42 @@
-const allNames= document.getElementsByClassName('name')
-const searchInput =document.getElementById('searchInput')
+const carousel = document.getElementsByClassName('carousel-item')
 
-searchInput.addEventListener('keyup',(e)=>{
-  let searchValue=e.target.value.toLowerCase()
+const nextBtn=document.getElementById("carousel-button-next")
+const prevBtn=document.getElementById("carousel-button-prev")
+let slidePosition=0
+let totalSlides=carousel.length
 
-for(let i=0;i<allNames.length;i++){
-  let currentNames=allNames[i].textContent.toLowerCase()
-  console.log(currentNames)
+const removeSlide=()=>{
 
-  if(currentNames.includes(searchValue)){
-    allNames[i].style.display='block'
-  }else{
-    allNames[i].style.display='none'
+  for(let slide of carousel){
+    console.log(slide)
+    slide.classList.remove('carousel-item-visible')
+    slide.classList.add('carousel-item-hidden')
   }
 }
 
+const nextSlide=()=>{
+removeSlide()
+ if(slidePosition===totalSlides-1){
+  slidePosition=0
+ }else{ 
+ slidePosition++
+}
+carousel[slidePosition].classList.add('carousel-item-visible')
 
+}
 
-})
+const prevSlide=()=>{
+  removeSlide()
+  console.log(slidePosition)
+  if(slidePosition===0){
+    slidePosition=totalSlides-1
+  }else{ slidePosition--}
+ 
+  
+  console.log(slidePosition)
+  carousel[slidePosition].classList.add('carousel-item-visible')
+ }
+
+nextBtn.addEventListener('click',nextSlide)
+prevBtn.addEventListener('click',prevSlide)
+
